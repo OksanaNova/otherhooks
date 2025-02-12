@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useTransition } from 'react'
 import './App.css'
 import Comments from './Comments';
 
@@ -6,13 +6,17 @@ const filterBySearch = (entities, search) => entities.filter(item => item.name.c
 
 function App() {
 
+  const [isPending, startTransition] = useTransition();
+
   const [comments, setComments] = useState([]);
 
   const [userSearch, setUserSearch] = useState('');
 
   const handleSearch = (e) => {
     // console.log(e.target.value)
-    setUserSearch(e.target.value)
+    startTransition(() => {
+      setUserSearch(e.target.value)
+    });
   }
 
   useEffect(() => {
@@ -30,6 +34,10 @@ function App() {
     <>
 
     <input onChange={handleSearch} />
+
+    {isPending && (
+      <h1>Rendering...</h1>
+    )}
 
     <Comments entities={filterBySearch(comments, userSearch)} />
 
