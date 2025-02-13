@@ -1,6 +1,7 @@
 import { useState, useEffect, useTransition } from 'react'
 import './App.css'
 import Comments from './Comments';
+import ExampleUseId from './ExampleUseId';
 
 const filterBySearch = (entities, search) => entities.filter(item => item.name.concat(item.body).includes(search))
 
@@ -33,6 +34,8 @@ function App() {
   return (
     <>
 
+    <ExampleUseId />
+
     <input onChange={handleSearch} />
 
     {isPending && (
@@ -40,6 +43,9 @@ function App() {
     )}
 
     <Comments entities={filterBySearch(comments, userSearch)} />
+
+  
+  
 
     </>
   )
